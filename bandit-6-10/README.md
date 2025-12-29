@@ -21,9 +21,10 @@ The find command was used to search the entire filesystem for files matching spe
 * `user bandit7` filters files owned by bandit7
 * `group bandit6` filters files belonging to group bandit6
 * `size 33c` matches files of exactly 33 bytes
-  since thsese filters were showing many permission restricted files 
+* since thsese filters were showing many permission restricted files 
 * `2>/dev/null` suppresses permission denied errors
   Redirecting `2` to `/dev/null` discards those error messages so that only valid results are shown.
+  
 **Output:**
 
 ```bash
