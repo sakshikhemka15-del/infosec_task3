@@ -11,6 +11,7 @@ Find a file owned by **user bandit7**, **group bandit6**, and **33 bytes in size
 
 **Command Used:**
 ```bash
+ssh bandit6@bandit.labs.overthewire.org -p 2220
 find / -user bandit7 -group bandit6 -size 33c
 find / -user bandit7 -group bandit6 -size 33c 2>/dev/null
 cat /var/lib/dpkg/info/bandit7.password
@@ -45,6 +46,7 @@ Find the password for the next level from a file named `data.txt`. The password 
 
 **Command Used:**
 ```bash
+ssh bandit7@bandit.labs.overthewire.org -p 2220
 cat data.txt
 grep millionth data.txt
 ```
@@ -74,6 +76,7 @@ Find the password stored in data.txt.The password is the only line that appears 
 
 **Command Used:**
 ```bash
+ssh bandit8@bandit.labs.overthewire.org -p 2220
 sort data.txt | uniq -u
 ```
 **Explanation:**
@@ -87,4 +90,73 @@ To solve this:
 
 ```bash
 4CKMh1JI91bUIZZPXDqGanal4xvAg0JM
+```
+
+## Level 9 → Level 10
+
+**Task:**
+
+Find the password in data.txt.
+The file contains mostly non-readable characters, but the password is human-readable and preceded by several = characters.
+
+**Command Used:**
+```bash
+ssh bandit9@bandit.labs.overthewire.org -p 2220
+cat data.txt
+strings data.txt | grep '=='
+```
+**Explanation:**
+
+The file data.txt contains binary data mixed with unreadable characters, so using cat does not clearly show the password.
+
+To solve this:
+* `strings` extracts only human-readable text from a binary file.
+* `|` sends the readable output to the next command.
+* `grep '=='` filters lines that contain the == symbol
+  
+**Output**
+
+```bash
+========== the
+========== password
+E========== is
+5========== FGUW5ilLVJrxX9kMYMmlN4MgbpfMiqey
+```
+**Flag:**
+
+```bash
+FGUW5ilLVJrxX9kMYMmlN4MgbpfMiqey
+```
+## Level 10 → Level 11
+
+**Task:**
+
+Find the password stored in data.txt, which contains Base64 encoded data.
+
+**Command Used:**
+```bash
+ssh bandit10@bandit.labs.overthewire.org -p 2220
+cat data.txt
+base64 -d data.txt
+```
+**Explanation:**
+
+Base64 is an encoding method.
+Its purpose is to convert binary data into readable ASCII characters so it can be safely stored or transmitted.
+
+To solve this:
+* `base64` is the command-line utility used to work with Base64-encoded data
+*  `-d` flag tells the system to decode the scrambled string and unwrap it back to  original plain text .
+  
+  
+**Output**
+
+```bash
+VGhlIHBhc3N3b3JkIGlzIGR0UjE3M2ZaS2IwUlJzREZTR3NnMlJXbnBOVmozcVJyCg==
+The password is dtR173fZKb0RRsDFSGsg2RWnpNVj3qRr
+```
+**Flag:**
+
+```bash
+dtR173fZKb0RRsDFSGsg2RWnpNVj3qRr
 ```
